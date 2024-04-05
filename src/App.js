@@ -1,13 +1,19 @@
 // src/App.js
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Corrección aquí
+import LoginForm from './LoginForm';
+import HomePage from './HomePage';
 import React from 'react';
-import LoginForm from './components/LoginForm/LoginForm';
-import './App.css'; // Asegúrate de que este archivo contenga los estilos que acabamos de definir.
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App app-container">
-      <LoginForm />
-    </div>
+    <BrowserRouter> {/* Corrección aquí */}
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/HomePage" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
