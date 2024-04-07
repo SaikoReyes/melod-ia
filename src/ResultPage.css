@@ -1,0 +1,45 @@
+
+.result-background {
+    color: white;
+    background-color: #393939;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner {
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+
+.music-sheet {
+    width: 50%;
+    height: 50vh;
+    margin: 2rem auto;
+    display: block; 
+}
+
+.links a {
+    display: block;
+    color: white;
+    margin: 1rem 0;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.footer-link {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+
+}
