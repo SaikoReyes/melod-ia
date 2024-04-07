@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
 }
+.text-left{
+    color: white;
+}
 
 .banner{
     background-color: rgb(0, 0, 0);

@@ -19,9 +19,10 @@ function LoginForm() {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-md-4">
+                    <h3 className="text-left mb-4">Inicia sesión</h3>
                         <div className="card shadow-lg">
                             <div className="card-body">
-                                <h3 className="text-center mb-4">Iniciar sesión</h3>
+                                
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
                                         <label htmlFor="username" className="form-label">Usuario</label>
@@ -46,13 +47,16 @@ function LoginForm() {
                                         />
                                     </div>
                                     <button type="submit" className="btn btn-dark w-100">Ingresar</button>
-                                    <div className="text-center mt-3"><a>¿Aún no tienes una cuenta? </a>
+                                    <div className="form-label mt-3"><a>¿Aún no tienes una cuenta? </a>
                                         <a href="#" className="link-dark">Registrate</a>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="footer-link">
+                    <span>Melod-IA</span>
                 </div>
             </div>
         </div>
