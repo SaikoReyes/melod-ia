@@ -11,9 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <BrowserRouter> {/* Corrección aquí */}
+    <BrowserRouter> {}
       <Routes>
-        <Route path="/" element={<LoginForm />} />
+        <Route path="/login" element={<LoginForm />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/history" element={<HistoryPage />} />

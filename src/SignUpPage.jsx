@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SignUpPage.css';
+import { useNavigate } from 'react-router-dom';
 import Popup from './PopUp';
 
 function SignUpPage() {
@@ -16,6 +17,7 @@ function SignUpPage() {
         message: ''
     });
 
+    const navigate = useNavigate();
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -37,6 +39,9 @@ function SignUpPage() {
         }
     };
     const closePopup = () => {
+        if (popupInfo.title === "Registro exitoso") {
+            navigate('/login'); 
+        }
         setPopupInfo({
             isOpen: false,
             title: '',

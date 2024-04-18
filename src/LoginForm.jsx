@@ -1,14 +1,66 @@
 import React, { useState } from 'react';
-import './LoginForm.css'; // Ajusta la ruta según sea necesario
+import { useNavigate, Link } from 'react-router-dom';
+import './LoginForm.css';
+import Popup from './PopUp';  
 
 function LoginForm() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [popupInfo, setPopupInfo] = useState({
+        isOpen: false,
+        title: '',
+        message: ''
+    });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Manejo del envío del formulario
-        console.log(username, password);
+    const navigate = useNavigate();
+
+    // Lista de usuarios predefinidos para la demostración
+    const users = [
+        { email: 'user@example.com', password: 'password123' },
+        { email: 'test@example.com', password: 'testpassword' }
+    ];
+
+    const validateForm = () => {
+        if (!email || !password) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "Usuario y contraseña no pueden estar vacíos."
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                setPopupInfo({
+                    isOpen: true,
+                    title: "Bienvenido",
+                    message: `¡Bienvenido ${email}!`
+                });
+                setTimeout(() => {
+                    navigate('/HomePage'); 
+                }, 2000); 
+            } else {
+                setPopupInfo({
+                    isOpen: true,
+                    title: "Error de autenticación",
+                    message: "Usuario o contraseña no encontrados."
+                });
+            }
+        }
+    };
+
+    const closePopup = () => {
+        setPopupInfo({
+            isOpen: false,
+            title: '',
+            message: ''
+        });
     };
 
     return (
@@ -31,8 +83,8 @@ function LoginForm() {
                                             className="form-control"
                                             id="username"
                                             placeholder="Ingresa tu usuario"
-                                            value={username}
-                                            onChange={e => setUsername(e.target.value)}
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
                                         />
                                     </div>
                                     <div className="mb-3">
@@ -48,7 +100,7 @@ function LoginForm() {
                                     </div>
                                     <button type="submit" className="btn btn-dark w-100">Ingresar</button>
                                     <div className="form-label mt-3"><a>¿Aún no tienes una cuenta? </a>
-                                        <a href="#" className="link-dark">Registrate</a>
+                                        <a href="/SignUp" className="link-dark">Registrate</a>
                                     </div>
                                 </form>
                             </div>
@@ -58,6 +110,12 @@ function LoginForm() {
                 <div className="footer-link">
                     <span>Melod-IA</span>
                 </div>
+                <Popup
+                isOpen={popupInfo.isOpen}
+                handleClose={closePopup}
+                title={popupInfo.title}
+                message={popupInfo.message}
+            />
             </div>
         </div>
     );
