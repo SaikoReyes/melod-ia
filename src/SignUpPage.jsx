@@ -1,26 +1,114 @@
 import React, { useState } from 'react';
 import './SignUpPage.css';
+import Popup from './PopUp';
 
 function SignUpPage() {
-    // Estados para almacenar los valores de cada campo de entrada
+
     const [nombre, setNombre] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [email, setEmail] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
     const [contraseña, setContraseña] = useState('');
+    const [confirmarContraseña, setConfirmarContraseña] = useState('');
+    const [popupInfo, setPopupInfo] = useState({
+        isOpen: false,
+        title: '',
+        message: ''
+    });
 
-    // Función para manejar el envío del formulario
+    
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Aquí puedes pasar los datos a otro componente o función para la validación
-        console.log({
-            nombre,
-            apellidos,
-            email,
-            fechaNacimiento,
-            contraseña,
+        if (validateForm()) {
+            const userData = {
+                nombre,
+                apellidos,
+                email,
+                fechaNacimiento,
+                contraseña,
+            };
+            console.log(userData);
+            // Envío de datos al backend o API aquí...
+            setPopupInfo({
+                isOpen: true,
+                title: "Registro exitoso",
+                message: "¡Tu cuenta ha sido creada exitosamente!"
+            });
+        }
+    };
+    const closePopup = () => {
+        setPopupInfo({
+            isOpen: false,
+            title: '',
+            message: ''
         });
-        // Por ejemplo, podrías enviar estos datos a un backend o una API
+    };
+
+    const validateForm = () => {
+        
+        if (!nombre || nombre.length < 5) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "El nombre debe tener al menos 5 caracteres."
+            });
+            return false;
+        }
+    
+        
+        if (!apellidos || apellidos.length < 5) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "Los apellidos deben tener al menos 5 caracteres."
+            });
+            return false;
+        }
+    
+        
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "Por favor, introduce un correo electrónico válido."
+            });
+            return false;
+        }
+    
+        
+        const today = new Date();
+        const minDate = new Date(today.getFullYear() - 15, today.getMonth(), today.getDate());
+        if (!fechaNacimiento || new Date(fechaNacimiento) >= today || new Date(fechaNacimiento) > minDate) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "La fecha de nacimiento no es válida."
+            });
+            return false;
+        }
+    
+        
+        if (!contraseña || contraseña.length < 7 || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/.test(contraseña)) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "La contraseña debe tener al menos 7 caracteres, incluyendo un número, una letra mayúscula y una minúscula."
+            });
+            return false; 
+        }
+    
+        
+        if (contraseña !== confirmarContraseña) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error en el formulario",
+                message: "Las contraseñas no coinciden."
+            });
+            return false;
+        }
+    
+        
+        return true;
     };
 
     return (
@@ -77,7 +165,7 @@ function SignUpPage() {
                                     />
                                 </div>
                             </div>
-                            <div className="mb-3 ">
+                            <div className="mb-3">
                                 Contraseña
                                 <input
                                     type="password"
@@ -87,14 +175,27 @@ function SignUpPage() {
                                     onChange={e => setContraseña(e.target.value)}
                                 />
                             </div>
+                            <div className="mb-3">
+                                Confirmar Contraseña
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Confirmar Contraseña"
+                                    value={confirmarContraseña}
+                                    onChange={e => setConfirmarContraseña(e.target.value)}
+                                />
+                            </div>
                             <button type="submit" className="btn btn-dark w-100 my-4">Crear cuenta</button>
                         </form>
-                        <div className="footer-link fixed-bottom">
-                            <span>Melod-IA</span>
-                        </div>
                     </div>
                 </div>
             </div>
+            <Popup
+                isOpen={popupInfo.isOpen}
+                handleClose={closePopup}
+                title={popupInfo.title}
+                message={popupInfo.message}
+            />
         </div>
     );
 }
