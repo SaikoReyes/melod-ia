@@ -19,7 +19,7 @@ function ResultPage() {
         <div className="result-background">
             <div className="banner">
                 <h2>MELOD-IA</h2>
-                <a href="#" className="nav-link">Inicio</a>
+                <a href="/homepage" className="nav-link">Inicio</a>
             </div>
             <div className="container my-4 text-center my-5">
                 {/* Si es una imagen 
@@ -31,7 +31,7 @@ function ResultPage() {
                 
                 <div className="links">
                     <a href="#" onClick={handleDownload}>Descargar</a>
-                    <a href="#">Volver al inicio</a>
+                    <a href="/homepage">Volver al inicio</a>
                     <a href="#" onClick={handleShare}>Compartir</a>
                 </div>
             </div>

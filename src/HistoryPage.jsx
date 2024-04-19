@@ -21,7 +21,7 @@ function HistoryPage() {
         <div className="history-background">
             <div className="banner">
                 <h2>MELOD-IA</h2>
-                <a href="#" className="nav-link">Inicio</a>
+                <a href="/homepage" className="nav-link">Inicio</a>
             </div>
             <div className="container">
                 <h3 className="text-white my-5">Historial</h3>
