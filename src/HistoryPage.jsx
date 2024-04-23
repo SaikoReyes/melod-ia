@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './HistoryPage.css'; // Asegúrate de que este archivo contenga los estilos adecuados
 import clefIcon from './images/note.png'; // Reemplaza esto con la ruta real al ícono de clave de sol
 
 function HistoryPage() {
+
+    const handleLogout = () => {
+        localStorage.removeItem('userToken');
+        navigate('/login');
+    };
+
+    const navigate = useNavigate();
     // Suponiendo que esta sea una muestra de datos precargados que eventualmente vendrán de una BD
     const [historial, setHistorial] = useState([
         { id: 1, texto: 'Texto 1' },
@@ -21,7 +29,7 @@ function HistoryPage() {
         <div className="history-background">
             <div className="banner">
                 <h2>MELOD-IA</h2>
-                <a href="/homepage" className="nav-link">Inicio</a>
+                <button className="nav-link" onClick={handleLogout}>Cerrar Sesión</button>
             </div>
             <div className="container">
                 <h3 className="text-white my-5">Historial</h3>
@@ -35,8 +43,9 @@ function HistoryPage() {
                     ))}
                 </div>
             </div>
-            <div className="footer-link">
-                <span>Melod-IA</span>
+            <div className="footer-link fixed-bottom">
+                <a href="/homepage" className="nav-link">Inicio</a>
+                <span> | Melod-IA</span>
             </div>
         </div>
     );

@@ -12,6 +12,11 @@ function HomePage() {
     });
     const [loading, setLoading] = useState(false);
 
+    const handleLogout = () => {
+        localStorage.removeItem('userToken');
+        navigate('/login');
+    };
+
     const navigate = useNavigate();
 
     const validateText = () => {
@@ -55,7 +60,7 @@ function HomePage() {
         <div className="login-background">
             <div className="banner">
                 <h2>MELOD-IA</h2>
-                <a href="/homepage" className="nav-link">Inicio</a>
+                <button className="nav-link" onClick={handleLogout}>Cerrar Sesión</button>
             </div>
             <div className="container my-4">
                 <div className="row">

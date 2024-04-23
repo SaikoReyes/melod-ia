@@ -19,25 +19,46 @@ function SignUpPage() {
 
     const navigate = useNavigate();
     
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
-            const userData = {
-                nombre,
-                apellidos,
-                email,
-                fechaNacimiento,
-                contraseña,
-            };
-            console.log(userData);
-            // Envío de datos al backend o API aquí...
-            setPopupInfo({
-                isOpen: true,
-                title: "Registro exitoso",
-                message: "¡Tu cuenta ha sido creada exitosamente!"
-            });
+            try {
+                const response = await fetch('http://127.0.0.1:8000/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: contraseña,
+                        nombre: nombre,
+                        apellido: apellidos,
+                        fechaNacimiento: fechaNacimiento
+                    })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    setPopupInfo({
+                        isOpen: true,
+                        title: "Registro Exitoso",
+                        message: "Usuario registrado exitosamente"
+                    });
+                    setTimeout(() => {
+                        navigate('/login'); 
+                    }, 2000); 
+                } else {
+                    throw new Error(data.error || 'Error al registrar');
+                }
+            } catch (error) {
+                setPopupInfo({
+                    isOpen: true,
+                    title: "Error de Registro",
+                    message: error.toString()
+                });
+            }
         }
     };
+    
     const closePopup = () => {
         if (popupInfo.title === "Registro exitoso") {
             navigate('/login'); 

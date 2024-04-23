@@ -1,10 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ResultPage.css'; // Asegúrate de que este archivo contenga los estilos adecuados
 import sampleImage from './images/pentagram.jpg'; // Reemplaza con la ruta a tu imagen o PDF
 // Si es un PDF, puedes importarlo directamente si tu configuración de webpack lo permite
 import samplePDF from './images/pentagram.pdf';
 
 function ResultPage() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('userToken');
+        navigate('/login');
+    };
+
     const handleDownload = () => {
         // Aquí implementarías la lógica para descargar la imagen o PDF
         console.log('Descargar archivo');
@@ -19,7 +27,7 @@ function ResultPage() {
         <div className="result-background">
             <div className="banner">
                 <h2>MELOD-IA</h2>
-                <a href="/homepage" className="nav-link">Inicio</a>
+                <button className="nav-link" onClick={handleLogout}>Cerrar Sesión</button>
             </div>
             <div className="container my-4 text-center my-5">
                 {/* Si es una imagen 

@@ -14,12 +14,6 @@ function LoginForm() {
 
     const navigate = useNavigate();
 
-    // Lista de usuarios predefinidos para la demostración
-    const users = [
-        { email: 'user@example.com', password: 'password123' },
-        { email: 'test@example.com', password: 'testpassword' }
-    ];
-
     const validateForm = () => {
         if (!email || !password) {
             setPopupInfo({
@@ -32,27 +26,39 @@ function LoginForm() {
         return true;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
-            const user = users.find(user => user.email === email && user.password === password);
-            if (user) {
+    if (validateForm()) {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem('userToken', data.token);
                 setPopupInfo({
                     isOpen: true,
                     title: "Bienvenido",
-                    message: `¡Bienvenido ${email}!`
+                    message: `¡Bienvenido ${data.nombre}!`
                 });
                 setTimeout(() => {
                     navigate('/HomePage'); 
                 }, 2000); 
             } else {
-                setPopupInfo({
-                    isOpen: true,
-                    title: "Error de autenticación",
-                    message: "Usuario o contraseña no encontrados."
-                });
+                throw new Error(data.error || 'Usuario o contraseña incorrectos');
             }
+        } catch (error) {
+            setPopupInfo({
+                isOpen: true,
+                title: "Error de Autenticación",
+                message: error.toString()
+            });
         }
+    }
     };
 
     const closePopup = () => {
