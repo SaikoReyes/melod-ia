@@ -1,6 +1,6 @@
-// Popup2.js
+
 import React from 'react';
-import './PopUp2.css'; // Asegúrate de tener tus estilos aquí
+import './PopUp2.css';
 
 function PopUp2({ title, message, onConfirm, onCancel }) {
   return (
@@ -8,8 +8,8 @@ function PopUp2({ title, message, onConfirm, onCancel }) {
       <div className="popup-content">
         <h2>{title}</h2>
         <p>{message}</p>
-        <button onClick={onConfirm} className="btn btn-success">Continue</button>
-        <button onClick={onCancel} className="btn btn-danger">Logout</button>
+        <button onClick={onConfirm} className="btn btn-dark">Continuar</button>
+        <button onClick={onCancel} className="btn btn-dark">Cerrar Sesión</button>
       </div>
     </div>
   );

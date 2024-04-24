@@ -23,7 +23,11 @@
   }
   
   .popup h2 {
-    margin-top: 0;
+    background-color: #000; 
+    color: #fff;
+    padding: 10px 20px;
+    margin: -20px -20px 20px -20px;
+    border-radius: 0;
   }
   
   .btn-dark {
