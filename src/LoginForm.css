@@ -37,12 +37,12 @@
     color: #000000;
 }
 
-/* Asegúrate de que el color del texto del enlace '¿Olvidaste la contraseña?' sea visible contra el fondo gris claro */
+
 .link-light {
-    color: #333; /* O el color que prefieras que se vea bien en el fondo gris */
+    color: #333;
 }
 
-/* Si es necesario, establece los estilos para el texto '¿Todavía no tienes una cuenta? Regístrate' para asegurarte de que se vean correctamente */
+
 .additional-text {
-    color: #000000; /* Bootstrap's secondary text color */
+    color: #000000; 
 }

@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './HistoryPage.css'; // Asegúrate de que este archivo contenga los estilos adecuados
-import clefIcon from './images/note.png'; // Reemplaza esto con la ruta real al ícono de clave de sol
+import './HistoryPage.css';
+import clefIcon from './images/note.png';
+import axios from 'axios';
 
 function HistoryPage() {
+    const navigate = useNavigate();
+    const [historial, setHistorial] = useState([]);
+    const token = localStorage.getItem('userToken'); 
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        axios.get(`http://127.0.0.1:8000/get_user_history/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            setHistorial(response.data);
+        })
+        .catch(error => {
+            console.error('Failed to fetch history:', error);
+        });
+    }, [token]);
 
     const handleLogout = () => {
         localStorage.removeItem('userToken');
         navigate('/login');
     };
 
-    const navigate = useNavigate();
-    // Suponiendo que esta sea una muestra de datos precargados que eventualmente vendrán de una BD
-    const [historial, setHistorial] = useState([
-        { id: 1, texto: 'Texto 1' },
-        { id: 2, texto: 'Texto 2' },
-        { id: 3, texto: 'Texto 3' },
-    ]);
+    const selectPartitura = (idPartitura) => {
+        localStorage.setItem('partituraId', idPartitura); 
+        navigate('/result'); 
+    };
 
-    // Función para manejar la eliminación de un elemento del historial
-    const eliminarElemento = (id) => {
-        console.log(`Eliminado elemento ${id}`);
-        // Aquí podrías actualizar el estado para filtrar el elemento eliminado
-        setHistorial(historial.filter(item => item.id !== id));
+    const eliminarElemento = (idPartitura) => {
+        axios.delete(`http://127.0.0.1:8000/delete_partitura/${idPartitura}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(() => {
+            setHistorial(historial.filter(item => item.idPartitura !== idPartitura));
+        })
+        .catch(error => {
+            console.error('Error deleting item:', error);
+        });
     };
 
     return (
@@ -34,18 +57,20 @@ function HistoryPage() {
             <div className="container">
                 <h3 className="text-white my-5">Historial</h3>
                 <div className="history-list">
-                    {historial.map((item, index) => (
-                        <div key={item.id} className="history-item">
+                    {historial.map(item => (
+                        <div key={item.idPartitura} className="history-item">
                             <img src={clefIcon} alt="Clave de sol" width='100px' height='100px'/>
-                            <span className="history-text">{item.texto}</span>
-                            <button onClick={() => eliminarElemento(item.id)} className="delete-button">🗑️</button>
+                            <span className="history-text" onClick={() => selectPartitura(item.idPartitura)}>{item.texto}</span>
+                            <button onClick={() => eliminarElemento(item.idPartitura)} className="delete-button">🗑️</button>
                         </div>
                     ))}
                 </div>
             </div>
             <div className="footer-link fixed-bottom">
                 <a href="/homepage" className="nav-link">Inicio</a>
-                <span> | Melod-IA</span>
+                
+                <span>Melod-IA</span>
+                
             </div>
         </div>
     );

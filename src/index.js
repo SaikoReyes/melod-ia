@@ -1,9 +1,9 @@
-// src/index.js
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';  // Asegúrate de que esta línea esté aquí
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 ReactDOM.render(
   <React.StrictMode>

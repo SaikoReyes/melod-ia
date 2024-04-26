@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 import Popup from './PopUp'; 
+import axios from 'axios';
 
 function HomePage() {
     const [text, setText] = useState('');
@@ -35,16 +36,40 @@ function HomePage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateText()) {
+            const userToken = localStorage.getItem('userToken'); 
+            if (!userToken) {
+                setPopupInfo({
+                    isOpen: true,
+                    title: 'No autorizado',
+                    message: 'No se encontró token de usuario. Por favor, inicie sesión.'
+                });
+                return;
+            }
+            console.log('Usuario ID:', localStorage.getItem('userId'));
             setLoading(true);
-            setPopupInfo({
-                isOpen: true,
-                title: 'Procesando',
-                message: 'Tu texto está siendo procesado...'
-            });
-            setTimeout(() => {
-                setLoading(false);
+            axios.post('http://127.0.0.1:8000/generate_xml', {
+                text: text,
+                user_id: localStorage.getItem('userId')
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${userToken}` 
+                }
+            })
+            .then(response => {
+                
+                
+                localStorage.setItem('partituraId', response.data.partitura_id);
                 navigate('/result');
-            }, 5000); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setPopupInfo({
+                    isOpen: true,
+                    title: 'Error',
+                    message: 'No se pudo procesar tu solicitud.'
+                });
+            })
+            .finally(() => setLoading(false));
         }
     };
 
@@ -82,15 +107,13 @@ function HomePage() {
                                 <button type="submit" className="btn btn-dark w-50 my-5">Listo</button>
                             </div>
                         </form>
-                        <p className="text-center">
-                            <a href="/history" className="badge badge-light my-4">Historial</a>
-                        </p>
                     </div>
                 </div>
             </div>
             <div className="footer-link fixed-bottom">
                 <a href="/homepage" className="nav-link">Inicio</a>
-                <span> | Melod-IA</span>
+                <span>Melod-IA</span>
+                <a href="/history" className="nav-link">Historial</a>
             </div>
             {popupInfo.isOpen && (
                 <Popup

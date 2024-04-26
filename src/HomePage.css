@@ -1,9 +1,7 @@
-/* HomePage.css */
 
-/* Estilos previamente proporcionados */
 .login-background {
     min-height: 100vh;
-    background-color: #393939; /* Fondo gris oscuro */
+    background-color: #393939;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,37 +12,41 @@
 }
 
 .banner {
-    width: 100%; /* Ancho completo */
-    background-color: #000; /* Fondo negro */
-    color: white; /* Texto blanco */
-    font-weight: 300; /* Fuente delgada */
-    padding: 1rem 0; /* Ajuste el padding según sea necesario */
-    position: fixed; /* Fijar en la parte superior */
-    top: 0; /* Alinea con la parte superior de la página */
-    left: 0; /* Alinea con el lado izquierdo de la página */
-    z-index: 1000; /* Asegura que se sitúe por encima de otros elementos */
+    width: 100%;
+    background-color: #000;
+    color: white; 
+    font-weight: 300;
+    padding: 1rem 0; 
+    position: fixed;
+    top: 0; 
+    left: 0;
+    z-index: 1000; 
 }
 
-/* Ajusta el padding del cuerpo para no solapar con el banner fijo */
+
 body {
-    padding-top: 60px; /* Debe ser al menos la altura de tu banner */
-    background-color: #393939; /* Color de fondo */
+    padding-top: 60px;
+    background-color: #393939;
 }
 
-/* Estilos para el formulario y el contenido debajo del banner */
+
 .login-background {
-    min-height: calc(100vh - 60px); /* Resta la altura del banner fijo */
+    min-height: calc(100vh - 60px);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 60px; /* De nuevo, ajusta este valor al de la altura de tu banner */
-    box-sizing: border-box; /* Asegúrate de que el padding no afecte el ancho total */
+    padding-top: 60px;
+    box-sizing: border-box;
 }
 
 
+.history-text {
+    cursor: pointer;
+    
+}
 
 .card {
-    background-color: #fff; /* Fondo blanco para el card */
+    background-color: #fff;
     border-radius: 8px;
     border: none;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
@@ -52,7 +54,7 @@ body {
 
 .link-light,
 .additional-text {
-    color: #000; /* Texto negro */
+    color: #000; 
     text-decoration: none;
 }
 
@@ -60,4 +62,29 @@ body {
     color: #000;
 }
 
-/* Resto de los estilos si los hay */
+.footer-link {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px; 
+    background-color: #333; 
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-link a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px; 
+}
+
+.footer-link span {
+    flex-grow: 1; 
+    text-align: center;
+}
+
+

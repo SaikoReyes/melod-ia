@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import Popup from './PopUp';  
+import config from './config';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
@@ -39,7 +40,9 @@ function LoginForm() {
             });
             const data = await response.json();
             if (response.ok) {
+                
                 localStorage.setItem('userToken', data.token);
+                localStorage.setItem('userId', data.idUsuario);
                 setPopupInfo({
                     isOpen: true,
                     title: "Bienvenido",

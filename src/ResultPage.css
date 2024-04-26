@@ -7,6 +7,15 @@
     flex-direction: column;
 }
 
+
+.osmd-container {
+    background-color: white;
+    border: 1px solid #ccc; 
+    overflow: auto;
+    padding: 20px;
+}
+
+
 .banner {
     background-color: #000;
     display: flex;
@@ -35,11 +44,41 @@
 }
 
 .footer-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 20px; 
+    background-color: #333;
+    color: white; 
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
-    padding: 1rem 0;
-
 }
+
+.footer-link a {
+    color: white; 
+    text-decoration: none;
+    padding: 0 15px; 
+}
+
+.footer-link span {
+    flex-grow: 1; 
+    text-align: center;
+}
+
+.download-button, .share-button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-button:hover, .share-button:hover {
+    background-color: #000000;
+}
+

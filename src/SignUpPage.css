@@ -1,15 +1,14 @@
-/* SignUpPage.css */
 
 .signup-background {
-    color: #ffffff; /* Texto blanco */
-    background-color: #393939; /* Fondo gris oscuro, como en diseños anteriores */
+    color: #ffffff;
+    background-color: #393939;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .banner {
-    background-color: #000; /* Fondo negro para el banner */
+    background-color: #000; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,37 +30,25 @@
 }
 
 .signup-form {
-    background-color: #393939; /* Fondo blanco para el formulario */
+    background-color: #393939; 
     padding: 4rem;
     border-radius: 8px;
 }
 
 .signup-form .form-control {
-    background-color: #e9ecef; /* Gris claro para los campos de formulario */
+    background-color: #e9ecef; 
     border: none;
-    margin-bottom: 1rem; /* Espacio entre campos de formulario */
+    margin-bottom: 1rem; 
 }
 
 .btn-primary {
-    background-color: #000; /* Botón negro */
+    background-color: #000;
     border: none;
 }
 
-/* SignUpPage.css */
 
-.footer-link {
-    position: fixed; /* Fijar el elemento en la parte inferior */
-    bottom: 0; /* Alinearlo al final de la página */
-    left: 0; /* Alinearlo a la izquierda */
-    width: 100%; /* Establecer el ancho al completo */
-    background-color: #393939; /* Fondo gris oscuro, como el fondo de la página */
-    color: white; /* Texto en blanco */
-    text-align: center;
-    padding: 1rem 0; /* Añadir algo de padding */
-}
 
-/* Corrige el padding del contenedor principal para evitar que el contenido se solape con el footer */
 .signup-background {
-    padding-bottom: 60px; /* Asegúrate de que este valor sea al menos la altura de tu footer */
+    padding-bottom: 60px; 
 }
 
