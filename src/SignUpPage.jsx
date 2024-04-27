@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './SignUpPage.css';
 import { useNavigate } from 'react-router-dom';
 import Popup from './PopUp';
+import config from './config';
 
 function SignUpPage() {
 
@@ -23,7 +24,7 @@ function SignUpPage() {
         event.preventDefault();
         if (validateForm()) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/registro', {
+                const response = await fetch(`${config.API_BASE_URL}/registro`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

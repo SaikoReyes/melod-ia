@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 import Popup from './PopUp'; 
 import axios from 'axios';
+import config from './config';
 
 function HomePage() {
     const [text, setText] = useState('');
@@ -47,7 +48,7 @@ function HomePage() {
             }
             console.log('Usuario ID:', localStorage.getItem('userId'));
             setLoading(true);
-            axios.post('http://127.0.0.1:8000/generate_xml', {
+            axios.post(`${config.API_BASE_URL}/generate_xml`, {
                 text: text,
                 user_id: localStorage.getItem('userId')
             }, {

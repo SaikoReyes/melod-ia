@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './ResultPage.css';
 import MusicXMLViewer from './MusicXMLViewer';
 import axios from 'axios';
+import config from './config';
 
 function ResultPage() {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function ResultPage() {
         const partituraId = localStorage.getItem('partituraId');
         const userToken = localStorage.getItem('userToken');
         if (partituraId && userToken) { 
-            axios.get(`http://127.0.0.1:8000/get_xml_by_id/${partituraId}`, {
+            axios.get(`${config.API_BASE_URL}/get_xml_by_id/${partituraId}`, {
                 headers: {
                     'Authorization': `Bearer ${userToken}`
                 }
@@ -61,7 +62,7 @@ function ResultPage() {
             navigator.share({
                 title: 'MELOD-IA',
                 text: 'Ven y crea tu propia partitura con nosotros :)',
-                url: 'https://tu-dominio.com/registrarse'
+                url: `${config.URL_SHARE}`
             })
             .then(() => console.log('¡Gracias por compartir!'))
             .catch(error => console.error('Error al compartir:', error));

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './HistoryPage.css';
 import clefIcon from './images/note.png';
 import axios from 'axios';
+import config from './config';
 
 function HistoryPage() {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ function HistoryPage() {
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
-        axios.get(`http://127.0.0.1:8000/get_user_history/${userId}`, {
+        axios.get(`${config.API_BASE_URL}/get_user_history/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -35,7 +36,7 @@ function HistoryPage() {
     };
 
     const eliminarElemento = (idPartitura) => {
-        axios.delete(`http://127.0.0.1:8000/delete_partitura/${idPartitura}`, {
+        axios.delete(`${config.API_BASE_URL}/delete_partitura/${idPartitura}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
