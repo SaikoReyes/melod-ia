@@ -21,58 +21,77 @@ function HomePage() {
 
     const navigate = useNavigate();
 
-    const validateText = () => {
-        const words = text.trim().split(/\s+/);
-        if (!text.trim() || words.length < 5) {
-            setPopupInfo({
-                isOpen: true,
-                title: 'Error en el texto',
-                message: 'Texto inválido'
-            });
-            return false;
+    function countSyllables(text) {
+        const cleanedText = text.toLowerCase().replace(/[^aáeéiíoóuúü]+/g, " ").trim();
+        const words = cleanedText.split(/\s+/);
+        let syllableCount = 0;
+        for (const word of words) {
+            syllableCount += word.replace(/[^aeiouáéíóúü]{2,}/g, 'x') 
+                                .replace(/e[aeiouáéíóú]/gi, 'ea') 
+                                .split(/[^aeiouáéíóúü]+/).length; 
         }
-        return true;
-    };
+        return syllableCount;
+    }
+
+
+    function validateText(text) {
+
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(text)) {
+            return { valid: false, message: 'El texto ingresado no es válido' };
+        }
+
+        const syllableCount = countSyllables(text);
+        if (syllableCount < config.SILABAS_MINIMAS) {
+            return { valid: false, message: `El texto debe contener al menos ${config.SILABAS_MINIMAS} sílabas.` };
+        }
+        return { valid: true, message: '' };
+    }
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (validateText()) {
-            const userToken = localStorage.getItem('userToken'); 
-            if (!userToken) {
-                setPopupInfo({
-                    isOpen: true,
-                    title: 'No autorizado',
-                    message: 'No se encontró token de usuario. Por favor, inicie sesión.'
-                });
-                return;
-            }
-            console.log('Usuario ID:', localStorage.getItem('userId'));
-            setLoading(true);
-            axios.post(`${config.API_BASE_URL}/generate_xml`, {
-                text: text,
-                user_id: localStorage.getItem('userId')
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${userToken}` 
-                }
-            })
-            .then(response => {
-                
-                
-                localStorage.setItem('partituraId', response.data.partitura_id);
-                navigate('/result');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                setPopupInfo({
-                    isOpen: true,
-                    title: 'Error',
-                    message: 'No se pudo procesar tu solicitud.'
-                });
-            })
-            .finally(() => setLoading(false));
+        const { valid, message } = validateText(text);
+        if (!valid) {
+            setPopupInfo({
+                isOpen: true,
+                title: 'Texto inválido',
+                message: message
+            });
+            return;
         }
+        const userToken = localStorage.getItem('userToken');
+        if (!userToken) {
+            setPopupInfo({
+                isOpen: true,
+                title: 'No autorizado',
+                message: 'No se encontró token de usuario. Por favor, inicie sesión.'
+            });
+            return;
+        }
+        setLoading(true);
+        axios.post(`${config.API_BASE_URL}/generate_xml`, {
+            text: text,
+            user_id: localStorage.getItem('userId')
+        }, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        .then(response => {
+            localStorage.setItem('partituraId', response.data.partitura_id);
+            navigate('/result');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            setPopupInfo({
+                isOpen: true,
+                title: 'Error',
+                message: 'No se pudo procesar tu solicitud.'
+            });
+        })
+        .finally(() => setLoading(false));
     };
+    
 
     const closePopup = () => {
         setPopupInfo({

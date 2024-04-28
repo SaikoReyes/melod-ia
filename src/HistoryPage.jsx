@@ -3,12 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import './HistoryPage.css';
 import clefIcon from './images/note.png';
 import axios from 'axios';
-import config from './config';
+import config from './config'; 
+import Popup from './PopUp';
 
 function HistoryPage() {
     const navigate = useNavigate();
     const [historial, setHistorial] = useState([]);
-    const token = localStorage.getItem('userToken'); 
+    const [popupInfo, setPopupInfo] = useState({
+        isOpen: false,
+        title: '',
+        message: ''
+    });
+    const token = localStorage.getItem('userToken');
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -18,12 +24,23 @@ function HistoryPage() {
             }
         })
         .then(response => {
-            setHistorial(response.data);
+            if (response.data.length === 0) {
+                
+                setPopupInfo({
+                    isOpen: true,
+                    title: 'No tienes partituras',
+                    message: 'No tienes partituras creadas.'
+                });
+               
+                setTimeout(() => navigate('/homepage'), 2000); 
+            } else {
+                setHistorial(response.data);
+            }
         })
         .catch(error => {
             console.error('Failed to fetch history:', error);
         });
-    }, [token]);
+    }, [token, navigate]); 
 
     const handleLogout = () => {
         localStorage.removeItem('userToken');
@@ -31,8 +48,8 @@ function HistoryPage() {
     };
 
     const selectPartitura = (idPartitura) => {
-        localStorage.setItem('partituraId', idPartitura); 
-        navigate('/result'); 
+        localStorage.setItem('partituraId', idPartitura);
+        navigate('/result');
     };
 
     const eliminarElemento = (idPartitura) => {
@@ -42,10 +59,31 @@ function HistoryPage() {
             }
         })
         .then(() => {
-            setHistorial(historial.filter(item => item.idPartitura !== idPartitura));
+            
+            const updatedHistorial = historial.filter(item => item.idPartitura !== idPartitura);
+            setHistorial(updatedHistorial);
+           
+            if (updatedHistorial.length === 0) {
+               
+                setPopupInfo({
+                    isOpen: true,
+                    title: 'No tienes partituras',
+                    message: 'No tienes más partituras creadas.'
+                });
+                setTimeout(() => navigate('/homepage'), 2000); 
+            }
         })
         .catch(error => {
             console.error('Error deleting item:', error);
+        });
+    };
+    
+
+    const closePopup = () => {
+        setPopupInfo({
+            isOpen: false,
+            title: '',
+            message: ''
         });
     };
 
@@ -69,10 +107,17 @@ function HistoryPage() {
             </div>
             <div className="footer-link fixed-bottom">
                 <a href="/homepage" className="nav-link">Inicio</a>
-                
                 <span>Melod-IA</span>
-                
+                <a href="/history" className="nav-link">Historial</a>
             </div>
+            {popupInfo.isOpen && (
+                <Popup
+                    isOpen={popupInfo.isOpen}
+                    handleClose={closePopup}
+                    title={popupInfo.title}
+                    message={popupInfo.message}
+                />
+            )}
         </div>
     );
 }
