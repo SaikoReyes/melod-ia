@@ -5,6 +5,7 @@ import Popup from './PopUp';
 import axios from 'axios';
 import config from './config';
 
+
 function HomePage() {
     const [text, setText] = useState('');
     const [popupInfo, setPopupInfo] = useState({
@@ -20,26 +21,24 @@ function HomePage() {
     };
 
     const navigate = useNavigate();
-
+    
     function countSyllables(text) {
-        const cleanedText = text.toLowerCase().replace(/[^aáeéiíoóuúü]+/g, " ").trim();
+        const cleanedText = text.toLowerCase().replace(/[^aáeéiíoóuúüñ.,;!? ]+/g, " ").trim();
         const words = cleanedText.split(/\s+/);
         let syllableCount = 0;
         for (const word of words) {
-            syllableCount += word.replace(/[^aeiouáéíóúü]{2,}/g, 'x') 
-                                .replace(/e[aeiouáéíóú]/gi, 'ea') 
-                                .split(/[^aeiouáéíóúü]+/).length; 
+            syllableCount += word.replace(/[^aeiouáéíóúüñ]{2,}/g, 'x') 
+                                .replace(/e[aeiouáéíóúñ]/gi, 'ea') 
+                                .split(/[^aeiouáéíóúüñ]+/).length; 
         }
         return syllableCount;
     }
-
-
+    
     function validateText(text) {
-
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$/.test(text)) {
-            return { valid: false, message: 'El texto ingresado no es válido' };
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ .,;!¡¿?-]+$/.test(text)) {
+            return { valid: false, message: 'El texto ingresado contiene caracteres no permitidos.' };
         }
-
+    
         const syllableCount = countSyllables(text);
         if (syllableCount < config.SILABAS_MINIMAS) {
             return { valid: false, message: `El texto debe contener al menos ${config.SILABAS_MINIMAS} sílabas.` };
@@ -121,6 +120,8 @@ function HomePage() {
                                         value={text}
                                         onChange={(e) => setText(e.target.value)}
                                     ></textarea>
+                                    <p><sub>Nota: En caso de querer colocar números, colocalos como texto. Por ejemplo "1 = uno"</sub></p>
+                                    
                                 </div>
                             </div>
                             <div className='text-center'>

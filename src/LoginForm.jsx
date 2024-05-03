@@ -87,6 +87,7 @@ function LoginForm() {
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
                                         <label htmlFor="username" className="form-label">Usuario</label>
+                                        
                                         <input
                                             type="text"
                                             className="form-control"
@@ -95,6 +96,7 @@ function LoginForm() {
                                             value={email}
                                             onChange={e => setEmail(e.target.value)}
                                         />
+                                        <p><sub>Nota: Tu usuario es tu correo electrónico</sub></p>
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label">Contraseña</label>

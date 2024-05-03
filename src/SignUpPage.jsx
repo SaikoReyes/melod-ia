@@ -73,21 +73,21 @@ function SignUpPage() {
 
     const validateForm = () => {
         
-        if (!nombre || nombre.length < 5) {
+        if (!nombre || nombre.length < 1) {
             setPopupInfo({
                 isOpen: true,
                 title: "Error en el formulario",
-                message: "El nombre debe tener al menos 5 caracteres."
+                message: "El nombre debe tener al menos 1 caracter."
             });
             return false;
         }
     
         
-        if (!apellidos || apellidos.length < 5) {
+        if (!apellidos || apellidos.length < 1) {
             setPopupInfo({
                 isOpen: true,
                 title: "Error en el formulario",
-                message: "Los apellidos deben tener al menos 5 caracteres."
+                message: "Los apellidos deben tener al menos 1 caracter."
             });
             return false;
         }
@@ -193,7 +193,7 @@ function SignUpPage() {
                                 </div>
                             </div>
                             <div className="mb-3">
-                                Contraseña
+                                Contraseña 
                                 <input
                                     type="password"
                                     className="form-control"
@@ -201,6 +201,7 @@ function SignUpPage() {
                                     value={contraseña}
                                     onChange={e => setContraseña(e.target.value)}
                                 />
+                                <p><sub>Nota: La contraseña debe tener al menos al menos 7 caracteres, incluyendo un número, una letra mayúscula y una minúscula.</sub></p>
                             </div>
                             <div className="mb-3">
                                 Confirmar Contraseña
