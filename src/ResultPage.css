@@ -82,3 +82,16 @@
     background-color: #000000;
 }
 
+.button-dark {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+}
+
+.button-dark:hover {
+    background-color: #555;
+}
