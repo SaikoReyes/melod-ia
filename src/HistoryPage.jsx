@@ -18,7 +18,7 @@ function HistoryPage() {
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
-        axios.get(`${config.API_BASE_URL}/get_user_history/${userId}`, {
+        axios.get(`${config.API_BASE_URL}/api/get_user_history/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -53,7 +53,7 @@ function HistoryPage() {
     };
 
     const eliminarElemento = (idPartitura) => {
-        axios.delete(`${config.API_BASE_URL}/delete_partitura/${idPartitura}`, {
+        axios.delete(`${config.API_BASE_URL}/api/delete_partitura/${idPartitura}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

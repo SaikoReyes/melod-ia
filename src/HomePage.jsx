@@ -68,7 +68,7 @@ function HomePage() {
             return;
         }
         setLoading(true);
-        axios.post(`${config.API_BASE_URL}/generate_xml`, {
+        axios.post(`${config.API_BASE_URL}/api/generate_xml`, {
             text: text,
             user_id: localStorage.getItem('userId')
         }, {

@@ -24,7 +24,7 @@ function SignUpPage() {
         event.preventDefault();
         if (validateForm()) {
             try {
-                const response = await fetch(`${config.API_BASE_URL}/registro`, {
+                const response = await fetch(`${config.API_BASE_URL}/api/registro`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
