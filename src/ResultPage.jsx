@@ -13,7 +13,7 @@ function ResultPage() {
         const partituraId = localStorage.getItem('partituraId');
         const userToken = localStorage.getItem('userToken');
         if (partituraId && userToken) { 
-            axios.get(`${config.API_BASE_URL}/get_xml_by_id/${partituraId}`, {
+            axios.get(`${config.API_BASE_URL}/api/get_xml_by_id/${partituraId}`, {
                 headers: {
                     'Authorization': `Bearer ${userToken}`
                 }

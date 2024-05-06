@@ -16,7 +16,7 @@ function AuthHandler() {
     }, [navigate, timeoutHandle]);
 
     const renewToken = useCallback((token) => {
-        fetch('http://127.0.0.1:8000/refresh_token', {
+        fetch(`${config.API_BASE_URL}/api/refresh_token`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`

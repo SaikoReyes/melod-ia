@@ -1,5 +1,5 @@
 const config = {
-    API_BASE_URL: 'http://127.0.0.1:8000',
+  API_BASE_URL: 'https://15bb-148-204-78-5.ngrok-free.app',
     URL_SHARE: '',
     SILABAS_MINIMAS: 5
   };
