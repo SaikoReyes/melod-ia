@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Popup2 from './PopUp2';
+import config from './config';
 
 function AuthHandler() {
     const navigate = useNavigate();
