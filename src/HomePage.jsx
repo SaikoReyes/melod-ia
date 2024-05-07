@@ -13,7 +13,7 @@ function HomePage() {
         title: '',
         message: ''
     });
-    const [loading, setLoading] = useState(false);
+    const [setLoading] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem('userToken');

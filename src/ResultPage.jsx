@@ -30,7 +30,7 @@ function ResultPage() {
             console.log("Falta ID de partitura o token de usuario.");
             navigate('/login'); 
         }
-    }, []);
+    },);
 
     const downloadXML = (xmlData) => {
         const blob = new Blob([xmlData], { type: 'application/xml' });
@@ -80,7 +80,7 @@ function ResultPage() {
                 <button className="nav-link" onClick={handleLogout}>Cerrar Sesión</button>
             </div>
             <div className="container my-4 text-center my-5">
-                {musicXML ? <MusicXMLViewer musicXML={musicXML} /> : <p>Loading...</p>}
+                {musicXML ? <MusicXMLViewer musicXML={musicXML} /> : <p>Cargando...</p>}
                 <div>
                     <button onClick={handleDownload} className="btn btn-dark w-25 my-5">Descargar</button>
                     <button onClick={handleShare} className="btn btn-dark w-25 my-5">Compartir</button>

@@ -112,7 +112,7 @@ function LoginForm() {
                                         />
                                     </div>
                                     <button type="submit" className="btn btn-dark w-100">Ingresar</button>
-                                    <div className="form-label mt-3"><a>¿Aún no tienes una cuenta? </a>
+                                    <div className="form-label mt-3"><span>¿Aún no tienes una cuenta? </span>
                                         <a href="/SignUp" className="link-dark">Registrate</a>
                                     </div>
                                 </form>
