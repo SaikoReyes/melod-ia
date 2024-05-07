@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUpPage.css';
 import { useNavigate } from 'react-router-dom';
 import Popup from './PopUp';
@@ -17,8 +17,47 @@ function SignUpPage() {
         title: '',
         message: ''
     });
+    const [passwordCriteria, setPasswordCriteria] = useState({
+        minLength: false,
+        hasUpper: false,
+        hasLower: false,
+        hasNumber: false,
+        matches: false
+    });
+    
+    function passwordHasMinimumLength(password) {
+        return password.length >= 7;
+    }
+    
+    function passwordHasUppercaseLetter(password) {
+        return /[A-Z]/.test(password);
+    }
+    
+    function passwordHasLowercaseLetter(password) {
+        return /[a-z]/.test(password);
+    }
+    
+    function passwordHasNumber(password) {
+        return /[0-9]/.test(password);
+    }
+    
+    function passwordsMatch(password, confirmPassword) {
+        return password === confirmPassword;
+    }
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setPasswordCriteria({
+            minLength: passwordHasMinimumLength(contraseña),
+            hasUpper: passwordHasUppercaseLetter(contraseña),
+            hasLower: passwordHasLowercaseLetter(contraseña),
+            hasNumber: passwordHasNumber(contraseña),
+            matches: passwordsMatch(contraseña, confirmarContraseña)
+        });
+    }, [contraseña, confirmarContraseña]);
+    
+    
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -113,6 +152,8 @@ function SignUpPage() {
             });
             return false;
         }
+
+        
     
         
         if (!contraseña || contraseña.length < 7 || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/.test(contraseña)) {
@@ -133,6 +174,9 @@ function SignUpPage() {
             });
             return false;
         }
+
+        
+        
     
         
         return true;
@@ -193,7 +237,7 @@ function SignUpPage() {
                                 </div>
                             </div>
                             <div className="mb-3">
-                                Contraseña 
+                                Contraseña
                                 <input
                                     type="password"
                                     className="form-control"
@@ -201,7 +245,6 @@ function SignUpPage() {
                                     value={contraseña}
                                     onChange={e => setContraseña(e.target.value)}
                                 />
-                                <p><sub>Nota: La contraseña debe tener al menos al menos 7 caracteres, incluyendo un número, una letra mayúscula y una minúscula.</sub></p>
                             </div>
                             <div className="mb-3">
                                 Confirmar Contraseña
@@ -213,6 +256,16 @@ function SignUpPage() {
                                     onChange={e => setConfirmarContraseña(e.target.value)}
                                 />
                             </div>
+                            <div className="password-criteria-box">                                
+                                <ul>
+                                    <li style={{ color: passwordCriteria.minLength ? 'green' : 'red' }}>La contraseña contiene al menos 7 caracteres</li>
+                                    <li style={{ color: passwordCriteria.hasUpper ? 'green' : 'red' }}>La contraseña contiene una letra mayúscula</li>
+                                    <li style={{ color: passwordCriteria.hasLower ? 'green' : 'red' }}>La contraseña contiene una letra minúscula</li>
+                                    <li style={{ color: passwordCriteria.hasNumber ? 'green' : 'red' }}>La contraseña contiene un número</li>
+                                    <li style={{ color: passwordCriteria.matches ? 'green' : 'red' }}>Las contraseñas coinciden</li>
+                                </ul>
+                            </div>
+
                             <button type="submit" className="btn btn-dark w-100 my-4">Crear cuenta</button>
                         </form>
                     </div>

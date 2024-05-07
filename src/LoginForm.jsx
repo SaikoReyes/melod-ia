@@ -38,7 +38,9 @@ function LoginForm() {
                 },
                 body: JSON.stringify({ email: email, password: password })
             });
+            
             const data = await response.json();
+            
             if (response.ok) {
                 
                 localStorage.setItem('userToken', data.token);
