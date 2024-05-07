@@ -8,6 +8,7 @@ function AuthHandler() {
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
     const [timeoutHandle, setTimeoutHandle] = useState(null);
+    const [remainingTime, setRemainingTime] = useState(60); 
 
     const handleLogout = useCallback(() => {
         localStorage.removeItem('userToken');
@@ -50,18 +51,24 @@ function AuthHandler() {
 
             if (exp - now < 60 && exp - now > 0) {
                 setShowPopup(true);
+                setRemainingTime(Math.floor(exp - now));
                 setPopupMessage('Tu sesión está a punto de expirar. ¿Deseas continuar navegando?');
-                const handle = setTimeout(handleLogout, 60000); 
+                const handle = setTimeout(handleLogout, (exp - now) * 1000);
                 setTimeoutHandle(handle);
             } else if (exp - now <= 0) {
                 handleLogout();
             }
         };
 
-        const intervalId = setInterval(checkTokenExpiration, 60000); 
+        const countdownInterval = setInterval(() => {
+            setRemainingTime(prev => prev - 1);
+        }, 1000);
+
+        const intervalId = setInterval(checkTokenExpiration, 60000);
 
         return () => {
             clearInterval(intervalId);
+            clearInterval(countdownInterval);
             clearTimeout(timeoutHandle);
         };
     }, [handleLogout, renewToken, timeoutHandle]);
@@ -71,12 +78,13 @@ function AuthHandler() {
         renewToken(token);
         clearTimeout(timeoutHandle);
         setShowPopup(false);
+        setRemainingTime(60); 
     };
 
     return showPopup && (
         <Popup2 
             title="¿Sigues ahí?"
-            message={popupMessage}
+            message={`${popupMessage}\nTienes ${remainingTime} segundos restantes antes de que expire tu sesión.`}
             onConfirm={handleRenewSession}
             onCancel={handleLogout}
         />
